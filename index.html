@@ -41,8 +41,7 @@
 
 <body>
   <div id="time"></div>
-  <div id="message">以本地時間校準成功</div>
-
+  <div id="message" style="font-family: Arial;font-size: 28px;line-height: 0.7;">以本地時間校準成功<br><span style="font-size: 16px;">Time synchronization successful.</span></div>
   <div id="fullscreen-controls">
     <button id="fullscreen-toggle">
       <span class="material-symbols-outlined">fullscreen</span>
@@ -50,22 +49,36 @@
   </div>
 
   <div id="customization-panel">
-    <label for="color-picker">選擇時間顏色：</label>
+    <label for="color-picker" style="line-height: 0.7;">選擇時間顏色：<br><span style="font-size: 10px;">　Select Time Color</span></label>
     <input type="color" id="color-picker" value="#FF8C00">
 
-    <label for="font-picker">選擇字型：</label>
+    <label for="font-picker" style="line-height: 0.7;">選擇字型：<br><span style="font-size: 10px;">　Select Font</span></label>
     <select id="font-picker">
       <option value="'Major Mono Display', monospace" style="font-family: 'Major Mono Display', monospace;">1234567890</option>
-      <option value="Arial, sans-serif" style="font-family: Arial, sans-serif;">1234567890</option>
+      <option value="Arial, monospace" style="font-family: Arial, monospace;">1234567890</option>
       <option value="'Courier New', monospace" style="font-family: 'Courier New', monospace;">1234567890</option>
       <option value="'Libertinus Mono', monospace" style="font-family: 'Libertinus Mono', monospace;">1234567890</option>
       <option value="'B612 Mono', monospace" style="font-family: 'B612 Mono', monospace;">1234567890</option>
       <option value="'Xanh Mono', monospace" style="font-family: 'Xanh Mono', monospace;">1234567890</option>
       <option value="'Sixtyfour', monospace" style="font-family: 'Sixtyfour', monospace;">1234567890</option>
     </select>
-    <button id="reset-button">恢復初始設定</button>
+    <button id="reset-button" style="font-family: Arial;">Reset</button>
     <!-- 顯示日期按鈕 -->
-    <button id="toggle-date-button" style="position: static; margin-left: auto; padding: 5px 10px; font-size: 0.9rem; color: #fff; background-color: #333; border: 1px solid #fff; border-radius: 4px; cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease;">顯示日期</button>
+    <button id="toggle-date-button" style="
+      position: static;
+      margin-left: auto;
+      padding: 5px 5px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #333;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    ">
+      <span class="material-symbols-outlined">event_available</span>
+    </button>
   </div>
   <!-- 日期顯示區域 -->
   <div id="date-display" style="position: fixed; bottom: 50px; color: #fff; font-size: 1.5rem; font-family: 'Major Mono Display', monospace; display: none; z-index: 1000;font-weight: bold;justify-content: center;"></div>
@@ -85,10 +98,10 @@
     const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
     dateDisplay.textContent = formattedDate;
     dateDisplay.style.display = 'block';
-    toggleDateButton.textContent = '隱藏日期';
+    toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_busy</span>';
   } else {
     dateDisplay.style.display = 'none';
-    toggleDateButton.textContent = '顯示日期';
+    toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_available</span>';
   }
 
   toggleDateButton.addEventListener('click', () => {
@@ -97,11 +110,11 @@
       const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
       dateDisplay.textContent = formattedDate;
       dateDisplay.style.display = 'block';
-      toggleDateButton.textContent = '隱藏日期';
+      toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_busy</span>';
       localStorage.setItem('dateVisibility', 'visible');
     } else {
       dateDisplay.style.display = 'none';
-      toggleDateButton.textContent = '顯示日期';
+      toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_available</span>';
       localStorage.setItem('dateVisibility', 'hidden');
     }
   });
@@ -109,6 +122,18 @@
   fontPicker.addEventListener('change', (event) => {
     const selectedFont = event.target.value;
     dateDisplay.style.fontFamily = selectedFont;
+  });
+
+  toggleDateButton.addEventListener('mouseover', () => {
+    toggleDateButton.style.transform = 'scale(1.1)';
+    toggleDateButton.style.backgroundColor = '#444';
+    toggleDateButton.style.boxShadow = '0 6px 8px rgba(0, 0, 0, 0.4)';
+  });
+
+  toggleDateButton.addEventListener('mouseout', () => {
+    toggleDateButton.style.transform = 'scale(1)';
+    toggleDateButton.style.backgroundColor = '#333';
+    toggleDateButton.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3)';
   });
 </script>
 </body>
