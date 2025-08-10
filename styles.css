@@ -46,13 +46,16 @@ body {
 /* ==== 校準成功提示訊息 ==== */
 #message {
   position: absolute;
-  top: calc(50% + 10vw);
+  top: calc(55% + 10vw);
   left: 50%;
   transform: translateX(-50%);
   font-size: 3.5vw;
   color: #ADFF2F;
   text-align: center;
   transition: opacity 1s ease;
+  font-size: 14px; /* 縮小字體大小 */
+  white-space: nowrap; /* 防止換行 */
+  line-height: 1.2; /* 調整行高以適應縮小的字體 */
 }
 
 .fade-out {
@@ -224,4 +227,64 @@ body {
 #customization-panel {
   background-color: #222; /* 深色背景 */
   color: #FFD700; /* 黃色文字 */
+}
+
+/*
+ * 響應式設計：手機版排版
+ */
+@media (max-width: 768px) {
+  #time {
+    font-size: 6rem; /* 縮小時間字體 */
+  }
+
+  #customization-panel {
+    top: 20px;
+    /* bottom: 20px; */
+    right: 20px;
+    left: 20px;
+    transform: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+  }
+  
+  .panel-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .panel-row.button-row {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .panel-button {
+    width: 45px;
+    height: 45px;
+  }
+
+  #customization-panel label {
+    font-size: 12px;
+  }
+  
+  #customization-panel input,
+  #customization-panel select {
+    flex-grow: 1;
+  }
+
+  #date-display {
+    bottom: 150px; /* 避免與控制面板重疊 */
+  }
+
+  #fullscreen-controls {
+    display: none;
+  }
+
+  /* 修正手機字換行問題 */
+  #customization-panel, #date-display {
+    white-space: nowrap;
+  }
 }

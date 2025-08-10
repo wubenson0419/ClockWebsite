@@ -169,4 +169,36 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('timeColor');
     localStorage.removeItem('timeFont');
   });
+
+  // 日期按鈕功能邏輯
+  const toggleDateButton = document.getElementById('toggle-date-button');
+  const dateDisplay = document.getElementById('date-display');
+
+  // 初始化日期顯示狀態
+  const savedDateVisibility = localStorage.getItem('dateVisibility');
+  if (savedDateVisibility === 'visible') {
+    const today = new Date();
+    const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+    dateDisplay.textContent = formattedDate;
+    dateDisplay.style.display = 'block';
+    toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_busy</span>';
+  } else {
+    dateDisplay.style.display = 'none';
+    toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_available</span>';
+  }
+
+  toggleDateButton.addEventListener('click', () => {
+    if (dateDisplay.style.display === 'none') {
+      const today = new Date();
+      const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+      dateDisplay.textContent = formattedDate;
+      dateDisplay.style.display = 'block';
+      toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_busy</span>';
+      localStorage.setItem('dateVisibility', 'visible');
+    } else {
+      dateDisplay.style.display = 'none';
+      toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_available</span>';
+      localStorage.setItem('dateVisibility', 'hidden');
+    }
+  });
 });
