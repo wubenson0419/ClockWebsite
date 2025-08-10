@@ -185,5 +185,52 @@
     resetButton.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3)';
   });
 </script>
+
+<style>
+  @media (max-width: 768px) {
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+    }
+
+    #time {
+      
+      margin-bottom: 20px;
+    }
+
+    #customization-panel {
+      width: 100%;
+      padding: 10px;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    #customization-panel label {
+      font-size: 0.8rem;
+    }
+
+    #customization-panel input,
+    #customization-panel select,
+    #customization-panel button {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+    }
+
+    #date-display {
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    #fullscreen-controls {
+      display: none;
+    }
+  }
+</style>
 </body>
 </html>
