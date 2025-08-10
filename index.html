@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>網頁小時鐘</title>
+  
+  <!-- 字體 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap">
+
+  <!-- Favicon 分頁圖示 -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wubenson0419/ClockWebsite/refs/heads/main/ClockWebsite_icon.png">
+
+  <!-- PWA 設定 -->
+  <link rel="manifest" href="manifest.json" type="application/manifest+json" crossorigin="use-credentials">
+
+  <!-- iOS 主畫面圖示 -->
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/wubenson0419/ClockWebsite/refs/heads/main/ClockWebsite_04_19.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000" />
+  <meta name="background-color" content="#000000" />
+
+  <!-- 獨立的 CSS 檔案 -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- SEO 搜尋引擎優化 -->
+  <meta name="description" content="一個簡單的網頁小時鐘，提供即時時間顯示，適合用於學習與展示。">
+  <meta name="keywords" content="網頁小時鐘, 時間顯示, HTML, CSS, JavaScript ,中原標準時間 ,時間">
+  <meta name="author" content="BensonWu">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=fullscreen" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=fullscreen_exit" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libertinus+Mono&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=B612+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Libertinus+Mono&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=B612+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Libertinus+Mono&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Xanh+Mono:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=B612+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Libertinus+Mono&family=Sixtyfour&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Xanh+Mono:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="time"></div>
+  <div id="message">以本地時間校準成功</div>
+
+  <div id="fullscreen-controls">
+    <button id="fullscreen-toggle">
+      <span class="material-symbols-outlined">fullscreen</span>
+    </button>
+  </div>
+
+  <div id="customization-panel">
+    <label for="color-picker">選擇時間顏色：</label>
+    <input type="color" id="color-picker" value="#FF8C00">
+
+    <label for="font-picker">選擇字型：</label>
+    <select id="font-picker">
+      <option value="'Major Mono Display', monospace" style="font-family: 'Major Mono Display', monospace;">1234567890</option>
+      <option value="Arial, sans-serif" style="font-family: Arial, sans-serif;">1234567890</option>
+      <option value="'Courier New', monospace" style="font-family: 'Courier New', monospace;">1234567890</option>
+      <option value="'Libertinus Mono', monospace" style="font-family: 'Libertinus Mono', monospace;">1234567890</option>
+      <option value="'B612 Mono', monospace" style="font-family: 'B612 Mono', monospace;">1234567890</option>
+      <option value="'Xanh Mono', monospace" style="font-family: 'Xanh Mono', monospace;">1234567890</option>
+      <option value="'Sixtyfour', monospace" style="font-family: 'Sixtyfour', monospace;">1234567890</option>
+    </select>
+    <button id="reset-button">恢復初始設定</button>
+    <!-- 顯示日期按鈕 -->
+    <button id="toggle-date-button" style="position: static; margin-left: auto; padding: 5px 10px; font-size: 0.9rem; color: #fff; background-color: #333; border: 1px solid #fff; border-radius: 4px; cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease;">顯示日期</button>
+  </div>
+  <!-- 日期顯示區域 -->
+  <div id="date-display" style="position: fixed; bottom: 50px; color: #fff; font-size: 1.5rem; font-family: 'Major Mono Display', monospace; display: none; z-index: 1000;font-weight: bold;justify-content: center;"></div>
+  <script src="scripts.js"></script>
+  <!-- Google Fonts Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<script>
+  const toggleDateButton = document.getElementById('toggle-date-button');
+  const dateDisplay = document.getElementById('date-display');
+  const fontPicker = document.getElementById('font-picker');
+
+  // 初始化日期顯示狀態
+  const savedDateVisibility = localStorage.getItem('dateVisibility');
+  if (savedDateVisibility === 'visible') {
+    const today = new Date();
+    const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+    dateDisplay.textContent = formattedDate;
+    dateDisplay.style.display = 'block';
+    toggleDateButton.textContent = '隱藏日期';
+  } else {
+    dateDisplay.style.display = 'none';
+    toggleDateButton.textContent = '顯示日期';
+  }
+
+  toggleDateButton.addEventListener('click', () => {
+    if (dateDisplay.style.display === 'none') {
+      const today = new Date();
+      const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+      dateDisplay.textContent = formattedDate;
+      dateDisplay.style.display = 'block';
+      toggleDateButton.textContent = '隱藏日期';
+      localStorage.setItem('dateVisibility', 'visible');
+    } else {
+      dateDisplay.style.display = 'none';
+      toggleDateButton.textContent = '顯示日期';
+      localStorage.setItem('dateVisibility', 'hidden');
+    }
+  });
+
+  fontPicker.addEventListener('change', (event) => {
+    const selectedFont = event.target.value;
+    dateDisplay.style.fontFamily = selectedFont;
+  });
+</script>
+</body>
+</html>

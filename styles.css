@@ -1,0 +1,227 @@
+/* ==== 全畫面純黑背景設定 ==== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: 'Major Mono Display', monospace;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+body {
+  padding: env(safe-area-inset);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* ==== 中央時間顯示 ==== */
+#time {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  font-size: 15vw;
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+  color: #FF8C00;
+  text-shadow:
+    0 0 5px rgba(255,140,0,0.8),
+    0 0 15px rgba(255,140,0,0.6),
+    0 0 30px rgba(255,140,0,0.4);
+  will-change: transform;
+  transition: transform 5s ease-in-out;
+  margin-bottom: 20px;
+}
+
+/* ==== 校準成功提示訊息 ==== */
+#message {
+  position: absolute;
+  top: calc(50% + 10vw);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3.5vw;
+  color: #ADFF2F;
+  text-align: center;
+  transition: opacity 1s ease;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+/* ==== 全螢幕與退出按鈕樣式 ==== */
+#fullscreen-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+#fullscreen-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  color: #fff;
+  background-color: #333;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+#fullscreen-controls button:hover {
+  transform: scale(1.2);
+  background-color: #444;
+}
+
+#fullscreen-controls button:active {
+  transform: scale(1.1);
+  transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+#fullscreen-controls.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* ==== 自訂面板樣式 ==== */
+#customization-panel {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  margin-top: 20px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Microsoft JhengHei', sans-serif;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  overflow: hidden; /* 隱藏滾動軸 */
+  scrollbar-width: none; /* Firefox 隱藏滾動條 */
+}
+
+#customization-panel::-webkit-scrollbar {
+  display: none; /* Chrome/Edge 隱藏滾動條 */
+}
+
+#customization-panel {
+  background: linear-gradient(135deg, #333, #444);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 10px;
+  max-height: 200px; /* 限制高度以防止溢出 */
+  overflow-y: auto; /* 保留滾動功能 */
+}
+
+#customization-panel label {
+  margin-right: 5px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+#customization-panel input,
+#customization-panel select {
+  background-color: #222;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  padding: 8px;
+  font-family: inherit;
+}
+
+/* ==== 自訂面板切換按鈕樣式 ==== */
+#customization-toggle {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  color: #fff;
+  background-color: #333;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+#customization-toggle:hover {
+  transform: scale(1.2);
+  background-color: #444;
+}
+
+#customization-toggle.hidden {
+  transform: scale(0);
+  pointer-events: none;
+}
+
+/* ==== 復原按鈕樣式 ==== */
+#reset-button {
+  position: static;
+  margin-left: auto;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #333;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#reset-button:hover {
+  background-color: #444;
+  transform: scale(1.1);
+}
+
+/* ==== 顏色預覽框樣式 ==== */
+#color-picker {
+  width: 40px; /* 填滿框 */
+  height: 40px;
+  border-radius: 50%; /* 圓形顯示 */
+  border: none;
+  background-color: #222; /* 深色主題 */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* ==== 自訂面板隱藏功能修復 ==== */
+#customization-panel.hidden {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==== 自訂面板顯示主題 ==== */
+#customization-panel {
+  background-color: #222; /* 深色背景 */
+  color: #FFD700; /* 黃色文字 */
+}
