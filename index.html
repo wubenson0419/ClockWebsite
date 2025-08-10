@@ -62,12 +62,47 @@
       <option value="'Xanh Mono', monospace" style="font-family: 'Xanh Mono', monospace;">1234567890</option>
       <option value="'Sixtyfour', monospace" style="font-family: 'Sixtyfour', monospace;">1234567890</option>
     </select>
-    <button id="reset-button" style="font-family: Arial;">Reset</button>
+    <!-- 修正 Reset 按鈕樣式 -->
+    <button id="reset-button" style="
+      position: static;
+      margin-left: auto;
+      
+      /* 設定按鈕為正方形 */
+      width: 33px;
+      height: 33px;
+      padding: 0; 
+      
+      /* 設定 Flexbox 讓圖示置中 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-size: 1rem;
+      color: #fff;
+      background-color: #333;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    ">
+      <span class="material-symbols-outlined">refresh</span>
+</button>
     <!-- 顯示日期按鈕 -->
     <button id="toggle-date-button" style="
       position: static;
       margin-left: auto;
-      padding: 5px 5px;
+      
+      /* 設定按鈕為正方形 */
+      width: 33px;
+      height: 33px;
+      padding: 0; 
+      
+      /* 設定 Flexbox 讓圖示置中 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       font-size: 1rem;
       color: #fff;
       background-color: #333;
@@ -134,6 +169,20 @@
     toggleDateButton.style.transform = 'scale(1)';
     toggleDateButton.style.backgroundColor = '#333';
     toggleDateButton.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3)';
+  });
+
+  const resetButton = document.getElementById('reset-button');
+
+  resetButton.addEventListener('mouseover', () => {
+    resetButton.style.transform = 'scale(1.1)';
+    resetButton.style.backgroundColor = '#444';
+    resetButton.style.boxShadow = '0 6px 8px rgba(0, 0, 0, 0.4)';
+  });
+
+  resetButton.addEventListener('mouseout', () => {
+    resetButton.style.transform = 'scale(1)';
+    resetButton.style.backgroundColor = '#333';
+    resetButton.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3)';
   });
 </script>
 </body>
