@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const timeElement = document.getElementById('time');
   const colorPicker = document.getElementById('color-picker');
   const fontPicker = document.getElementById('font-picker');
+  let dateDisplay;
 
   // 初始化偏好設定
   const savedColor = localStorage.getItem('timeColor');
@@ -122,6 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
   fontPicker.addEventListener('change', (event) => {
     const font = event.target.value;
     timeElement.style.fontFamily = font;
+    if (dateDisplay) {
+        dateDisplay.style.fontFamily = font;
+    }
 
     if (font.includes("Sixtyfour")) {
       timeElement.style.fontSize = "10vw"; // 縮小字體
@@ -156,23 +160,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetButton = document.getElementById('reset-button');
 
   resetButton.addEventListener('click', () => {
-    const defaultColor = '#FF8C00';
+    // 重設時間字型與顏色為預設值
     const defaultFont = "'Major Mono Display', monospace";
+    const defaultColor = "#FF8C00";
 
-    timeElement.style.color = defaultColor;
-    timeElement.style.textShadow = `0 0 5px rgba(255, 140, 0, 0.8), 0 0 15px rgba(255, 140, 0, 0.6), 0 0 30px rgba(255, 140, 0, 0.4)`;
     timeElement.style.fontFamily = defaultFont;
+    timeElement.style.color = defaultColor;
+    timeElement.style.textShadow = `0 0 5px ${defaultColor}, 0 0 15px ${defaultColor}, 0 0 30px ${defaultColor}`;
 
+    localStorage.setItem('timeFont', defaultFont);
+    localStorage.setItem('timeColor', defaultColor);
+
+    // 確保 Sixtyfour 字型的特殊處理
+    if (defaultFont.includes("Sixtyfour")) {
+        timeElement.style.fontSize = "10vw"; // 縮小字體
+    } else {
+        timeElement.style.fontSize = "15vw"; // 恢復預設字體大小
+    }
+
+    // 日期永遠保持白色粗體，並重設字型
+    dateDisplay.style.color = "#FFFFFF";
+    dateDisplay.style.fontWeight = "bold";
+    dateDisplay.style.fontFamily = defaultFont;
+
+    // 重設選擇框中的顏色
     colorPicker.value = defaultColor;
-    fontPicker.value = defaultFont;
-
-    localStorage.removeItem('timeColor');
-    localStorage.removeItem('timeFont');
   });
 
   // 日期按鈕功能邏輯
   const toggleDateButton = document.getElementById('toggle-date-button');
-  const dateDisplay = document.getElementById('date-display');
+  dateDisplay = document.getElementById('date-display');
 
   // 初始化日期顯示狀態
   const savedDateVisibility = localStorage.getItem('dateVisibility');
