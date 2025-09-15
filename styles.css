@@ -252,8 +252,9 @@ body {
   text-shadow: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
   #time {
+    /* 上面的原始值是768 */
     font-size: 6rem; /* 縮小時間字體 */
   }
 
@@ -309,5 +310,5 @@ body {
   }
 
   /* 行動版將按鈕放到最左側 */
-  #toggle-glow-button { order: -1; }
+  /* #toggle-glow-button { order: -1; } */
 }

@@ -315,13 +315,12 @@
   <div id="time"></div>
   <div id="message" style="font-family: Arial;font-size: 28px;line-height: 0.7;">以本地時間校準成功<br><span style="font-size: 16px;">Time synchronization successful.</span></div>
   <div id="fullscreen-controls">
-    <button id="fullscreen-toggle">
+    <button id="fullscreen-toggle" title="只有在電腦版瀏覽器可使用此按鈕全螢幕" aria-label="Toggle Fullscreen">
       <span class="material-symbols-outlined">fullscreen</span>
     </button>
   </div>
 
   <div id="customization-panel">
-    
 
     <label for="color-picker" style="line-height: 0.7;">選擇時間顏色：<br><span style="font-size: 10px;">　Select Time Color</span></label>
     <input type="color" id="color-picker" value="#FF8C00">
@@ -336,22 +335,19 @@
       <option value="'Xanh Mono', monospace" style="font-family: 'Xanh Mono', monospace;">Xanh Mono (1234567890)</option>
       <option value="'Sixtyfour', monospace" style="font-family: 'Sixtyfour', monospace;">Sixtyfour (1234567890)</option>
     </select>
-    <!-- 修正 Reset 按鈕樣式 -->
+    <!-- Reset 按鈕 -->
     <button id="reset-button"  title="重置所有樣式" aria-label="Reset" 
     style="
       position: static;
       margin-left: auto;
-      
       /* 設定按鈕為正方形 */
       width: 33px;
       height: 33px;
       padding: 0; 
-      
       /* 設定 Flexbox 讓圖示置中 */
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-size: 1rem;
       color: #fff;
       background-color: #333;
@@ -362,23 +358,20 @@
       transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     ">
       <span class="material-symbols-outlined">refresh</span>
-</button>
-    <!-- 顯示日期按鈕 -->
+    </button>
+    <!-- 日期按鈕 -->
     <button id="toggle-date-button"  title="日期顯示開關" aria-label="Toggle date" 
     style="
       position: static;
-      margin-left: auto;
-      
+      margin-left: auto;     
       /* 設定按鈕為正方形 */
       width: 33px;
       height: 33px;
-      padding: 0; 
-      
+      padding: 0;      
       /* 設定 Flexbox 讓圖示置中 */
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-size: 1rem;
       color: #fff;
       background-color: #333;
@@ -394,18 +387,15 @@
     <button id="toggle-glow-button" class="panel-button" title="光暈效果開關" aria-label="Toggle glow" 
     style="
       position: static;
-      margin-left: auto;
-      
+      margin-left: auto;     
       /* 設定按鈕為正方形 */
       width: 33px;
       height: 33px;
-      padding: 0; 
-      
+      padding: 0;      
       /* 設定 Flexbox 讓圖示置中 */
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-size: 1rem;
       color: #fff;
       background-color: #333;
