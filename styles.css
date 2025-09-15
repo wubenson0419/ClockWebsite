@@ -131,6 +131,7 @@ body {
 }
 
 #customization-panel {
+  white-space: nowrap;
   background: linear-gradient(135deg, #333, #444);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
@@ -229,9 +230,28 @@ body {
   color: #FFD700; /* 黃色文字 */
 }
 
-/*
- * 響應式設計：手機版排版
- */
+/* ==== Glow toggle button & no-glow rule ==== */
+#toggle-glow-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 6px;
+  color: #fff;
+  background: #333;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+#toggle-glow-button:hover { transform: scale(1.05); background: #444; }
+
+/* 移除光暈：加上 .no-glow 到 #time */
+#time.no-glow {
+  text-shadow: none !important;
+}
+
 @media (max-width: 768px) {
   #time {
     font-size: 6rem; /* 縮小時間字體 */
@@ -287,4 +307,7 @@ body {
   #customization-panel, #date-display {
     white-space: nowrap;
   }
+
+  /* 行動版將按鈕放到最左側 */
+  #toggle-glow-button { order: -1; }
 }

@@ -143,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const hideCustomizationPanel = () => {
     customizationPanel.classList.add('hidden');
   };
-
-  // 修復自訂面板自動隱藏功能
+  
   const resetCustomizationTimeout = () => {
     clearTimeout(customizationTimeout);
     customizationTimeout = setTimeout(hideCustomizationPanel, 5000); // 5秒後隱藏
@@ -185,37 +184,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 重設選擇框中的顏色
     colorPicker.value = defaultColor;
+
+    // 重設時強制啟用光暈效果
+    if (typeof applyGlowState === 'function') {
+      applyGlowState(true);
+    }
   });
 
   // 日期按鈕功能邏輯
-  const toggleDateButton = document.getElementById('toggle-date-button');
-  dateDisplay = document.getElementById('date-display');
+const toggleDateButton = document.getElementById('toggle-date-button');
+dateDisplay = document.getElementById('date-display');
 
-  // 初始化日期顯示狀態
-  const savedDateVisibility = localStorage.getItem('dateVisibility');
-  if (savedDateVisibility === 'visible') {
-    const today = new Date();
-    const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
-    dateDisplay.textContent = formattedDate;
+// 💡 新增：一個獨立的函式，用來格式化日期並確保補零
+function getFormattedDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  // 月份是從 0-11，所以要 +1
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}/${month}/${day}`;
+}
+
+// 初始化日期顯示狀態
+const savedDateVisibility = localStorage.getItem('dateVisibility');
+if (savedDateVisibility === 'visible') {
+  // 使用新的函式來取得格式化後的日期
+  dateDisplay.textContent = getFormattedDate();
+  dateDisplay.style.display = 'block';
+  toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_busy</span>';
+} else {
+  dateDisplay.style.display = 'none';
+  toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_available</span>';
+}
+
+toggleDateButton.addEventListener('click', () => {
+  if (dateDisplay.style.display === 'none') {
+    // 按下按鈕時也使用新的函式
+    dateDisplay.textContent = getFormattedDate();
     dateDisplay.style.display = 'block';
     toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_busy</span>';
+    localStorage.setItem('dateVisibility', 'visible');
   } else {
     dateDisplay.style.display = 'none';
     toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_available</span>';
+    localStorage.setItem('dateVisibility', 'hidden');
+  }
+});
+
+
+  // Glow toggle 按鈕邏輯
+  const toggleGlowButton = document.getElementById('toggle-glow-button');
+  function applyGlowState(enabled) {
+    if (enabled) {
+      timeElement.classList.remove('no-glow');
+      if (toggleGlowButton) toggleGlowButton.innerHTML = '<span class="material-symbols-outlined">blur_off</span>';
+      localStorage.setItem('glowEnabled', 'true');
+    } else {
+      timeElement.classList.add('no-glow');
+      if (toggleGlowButton) toggleGlowButton.innerHTML = '<span class="material-symbols-outlined">blur_on</span>';
+      localStorage.setItem('glowEnabled', 'false');
+    }
   }
 
-  toggleDateButton.addEventListener('click', () => {
-    if (dateDisplay.style.display === 'none') {
-      const today = new Date();
-      const formattedDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
-      dateDisplay.textContent = formattedDate;
-      dateDisplay.style.display = 'block';
-      toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_busy</span>';
-      localStorage.setItem('dateVisibility', 'visible');
-    } else {
-      dateDisplay.style.display = 'none';
-      toggleDateButton.innerHTML = '<span class="material-symbols-outlined">event_available</span>';
-      localStorage.setItem('dateVisibility', 'hidden');
-    }
-  });
+  const savedGlow = localStorage.getItem('glowEnabled');
+  const initialGlow = savedGlow === null ? true : savedGlow === 'true';
+  applyGlowState(initialGlow);
+  if (toggleGlowButton) {
+    toggleGlowButton.addEventListener('click', () => {
+      const currentlyEnabled = !timeElement.classList.contains('no-glow');
+      applyGlowState(!currentlyEnabled);
+    });
+  }
 });
